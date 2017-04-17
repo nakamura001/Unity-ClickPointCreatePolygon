@@ -18,7 +18,7 @@ public class ClickPointCreatePolygon : MonoBehaviour {
 	GameObject CreateCube (Vector3 pos)
 	{
 		GameObject cube = GameObject.CreatePrimitive (PrimitiveType.Cube);
-		cube.renderer.material = cubeMaterial;
+		cube.GetComponent<Renderer>().material = cubeMaterial;
 		cube.transform.position = pos;
 		float s = 0.02f;
 		cube.transform.localScale = new Vector3 (s, s, s);
@@ -29,7 +29,7 @@ public class ClickPointCreatePolygon : MonoBehaviour {
 	{
 		Vector3 mousePos = Input.mousePosition;
 		mousePos.z = 1f;
-		cubeList [cubeIndex++].transform.position = Camera.mainCamera.ScreenToWorldPoint (mousePos);
+		cubeList [cubeIndex++].transform.position = Camera.main.ScreenToWorldPoint (mousePos);
 	}
 	
 	void CreatePolygon ()
@@ -48,7 +48,7 @@ public class ClickPointCreatePolygon : MonoBehaviour {
 			Vector3 pos = cubeList [i].transform.position;
 			verticesXY [i] = new Vector2 (pos.x, pos.y);			
 		}
-		Triangulator tr = new Triangulator (verticesXY, Camera.mainCamera.transform.position);
+		Triangulator tr = new Triangulator (verticesXY, Camera.main.transform.position);
 		int[] indices = tr.Triangulate ();
 		Debug.Log(indices.Length);
 		mesh.triangles = indices;
@@ -58,7 +58,7 @@ public class ClickPointCreatePolygon : MonoBehaviour {
 
 		mesh.RecalculateNormals ();	// 法線の再計算
 		mesh.RecalculateBounds ();	// バウンディングボリュームの再計算
-		mesh.Optimize ();
+		;
 		
 		GameObject newGameobject = new GameObject (objectName);
 		
